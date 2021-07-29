@@ -48,6 +48,21 @@ typedef enum {
   ADC_INTERRUPT_ENABLE
 } ___ADC_IER_Enum;
 
+typedef enum {
+  ADC_OFF,
+  ADC_ON
+} ___ADC_EN_Enum;
+
+typedef enum {
+  ADC_NOOP,
+  ADC_DISABLE
+} ___ADC_ADDIS_Enum;
+
+typedef enum {
+  ADC_NOOP,
+  ADC_CONV_START
+} ___ADC_CONV_Enum;
+
 typedef struct {
 
   /* @Start=0x00, @End=0x03 */
@@ -89,7 +104,16 @@ typedef struct {
     } _IER;
   };
   /* @Start=0x08, @End=0x0B */
-  uint32_t CR;
+  union {
+    uint32_t CR;
+    struct _CR {
+      ___ADC_EN_Enum ADEN : 1;
+      ___ADC_ADDIS_Enum ADDIS : 1;
+      ___ADC_CONV_Enum ADSTART : 1;
+      ___ADC_CONV_Enum JADSTART : 1;
+
+    } _CR;
+  }
   /* @Start=0x0C, @End=0x13 */
   uint32_t CFGR[2];
   /* @Start=0x14, @End=0x1B */
