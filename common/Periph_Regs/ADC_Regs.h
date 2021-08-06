@@ -49,19 +49,35 @@ typedef enum {
 } ___ADC_IER_Enum;
 
 typedef enum {
-  ADC_OFF,
-  ADC_ON
+  ADC_OFF = 0x0U,
+  ADC_ON_NOOP = 0x1U,
+  ADC_ON_ADDIS = 0x3U,
 } ___ADC_EN_Enum;
 
 typedef enum {
-  ADC_NOOP,
-  ADC_DISABLE
-} ___ADC_ADDIS_Enum;
+  ADC_CONV_NOOP = 0x0u,
+  ADC_CONV_REGULAR_START = 0x1u,
+  ADC_CONV_INJECTED_START = 0x2u,
+  ADC_CONV_REGULAR_STOP = 0x4u,
+  ADC_CONV_INJECTED_STOP = 0x8u
+} ___ADC_CONV_Enum;
 
 typedef enum {
-  ADC_NOOP,
-  ADC_CONV_START
-} ___ADC_CONV_Enum;
+  ADC_CLK_BELOW_6MHZ = 0x0u,
+  ADC_CLK_BELOW_12MHZ = 0x1u,
+  ADC_CLK_BELOW_25MHZ = 0x2u,
+  ADC_CLK_BELOW_50MHZ = 0x3u
+} ___ADC_BOOST_Enum;
+
+typedef enum {
+  ADC_LIN_CAL_DISABLE,
+  ADC_LIN_CAL_ENABLE
+} ___ADC_LINCAL_EN_Enum;
+
+typedef enum {
+  ADC_LIN_CAL_NOT_READY,
+  ADC_LIN_CAL_READY
+} ___ADC_LIN_CAL_READY_Enum;
 
 typedef struct {
 
@@ -107,13 +123,23 @@ typedef struct {
   union {
     uint32_t CR;
     struct _CR {
-      ___ADC_EN_Enum ADEN : 1;
-      ___ADC_ADDIS_Enum ADDIS : 1;
-      ___ADC_CONV_Enum ADSTART : 1;
-      ___ADC_CONV_Enum JADSTART : 1;
-
+      ___ADC_EN_Enum ADEN : 2;
+      ___ADC_CONV_Enum CONV : 4;
+      int : 2;
+      ___ADC_BOOST_Enum BOOST : 2;
+      int : 6;
+      ___ADC_LINCAL_EN_Enum ADCALLIN : 1;
+      int : 5;
+      ___ADC_LIN_CAL_READY_Enum LINCALRDYW1 : 1;
+      ___ADC_LIN_CAL_READY_Enum LINCALRDYW2 : 1;
+      ___ADC_LIN_CAL_READY_Enum LINCALRDYW3 : 1;
+      ___ADC_LIN_CAL_READY_Enum LINCALRDYW4 : 1;
+      ___ADC_LIN_CAL_READY_Enum LINCALRDYW5 : 1;
+      ___ADC_LIN_CAL_READY_Enum LINCALRDYW6 : 1;
+      
     } _CR;
-  }
+  };
+  
   /* @Start=0x0C, @End=0x13 */
   uint32_t CFGR[2];
   /* @Start=0x14, @End=0x1B */
