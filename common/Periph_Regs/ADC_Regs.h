@@ -79,6 +79,26 @@ typedef enum {
   ADC_LIN_CAL_READY
 } ___ADC_LIN_CAL_READY_Enum;
 
+typedef enum {
+  ADC_VREG_DISABLE,
+  ADC_VREG_ENABLE
+} ___ADC_VREG_EN_Enum;
+
+typedef enum {
+  ADC_PWRDN_OFF,
+  ADC_PWRDN_ON
+} ___ADC_PWRDN_Enum;
+
+typedef enum {
+  ADC_CAL_SINGLEENDED,
+  ADC_CAL_DIFFERENTIAL
+} ___ADC_CAL_DIF_Enum;
+
+typedef enum {
+  ADC_CAL_COMPLETE,
+  ADC_CAL_START
+} ___ADC_CAL_Enum;
+
 typedef struct {
 
   /* @Start=0x00, @End=0x03 */
@@ -136,7 +156,10 @@ typedef struct {
       ___ADC_LIN_CAL_READY_Enum LINCALRDYW4 : 1;
       ___ADC_LIN_CAL_READY_Enum LINCALRDYW5 : 1;
       ___ADC_LIN_CAL_READY_Enum LINCALRDYW6 : 1;
-      
+      ___ADC_VREG_EN_Enum VREGEN : 1;
+      ___ADC_PWRDN_Enum PWRDN : 1;
+      ___ADC_CAL_DIF_Enum CAL_DIF : 1;
+      ___ADC_CAL_Enum ADCCAL : 1;
     } _CR;
   };
   
