@@ -99,8 +99,81 @@ typedef enum {
   ADC_CAL_START
 } ___ADC_CAL_Enum;
 
-typedef struct {
+typedef enum {
+  ADC_REGULAR,
+  ADC_DMA_ONE_SHOT,
+  ADC_DFSDM,
+  ADC_DMA_CIRCULAR
+} ___ADC_DMNGT_Enum;
 
+typedef enum {
+  ADC_RES_16BITS = 0x0u,
+  ADC_RES_14BITS_LEGACY = 0x1u,
+  ADC_RES_12BITS_LEGACY = 0x2u,
+  ADC_RES_10BITS = 0x3u,
+  ADC_RES_14BITS = 0x5u,
+  ADC_RES_12BITS = 0x6u,
+  ADC_RES_8BITS = 0x7u
+} ___ADC_RES_Enum;
+
+typedef enum {
+  ADC_TRIG_DISABLED,
+  ADC_TRIG_RISING,
+  ADC_TRIG_FALLING,
+  ADC_TRIG_RISING_FALLING
+} ___ADC_TRIG_Enum;
+
+typedef enum {
+  ADC_DR_PRESERVE,
+  ADC_DR_OVERWRITE
+} ___ADC_OVRMOD_Enum;
+
+typedef enum {
+  ADC_CONT_SINGLECONV,
+  ADC_CONT_CONTINUOUS
+} ___ADC_CONT_Enum;
+
+typedef enum {
+  ADC_AUTODELAY_OFF,
+  ADC_AUTODELAY_ON
+} ___ADC_AUTDLY_Enum;
+
+typedef enum {
+  ADC_DISCONT_DISABLE,
+  ADC_DISCONT_ENABLE
+} ___ADC_DISCEN_Enum;
+
+typedef enum {
+  ADC_JSQR_QUEUE_NEVER_EMPTY,
+  ADC_JSQR_QUEUE_ALLOW_EMPTY
+} ___ADC_JSQRQM_Enum;
+
+typedef enum {
+  ADC_AWDG1_ALL_CHANNELS,
+  ADC_AWDG1_SINGLE_CHANNEL
+} ___ADC_AWDG1_SGL_Enum;
+
+typedef enum {
+  ADC_AWDG1_CHANNELS_DISABLE,
+  ADC_AWDG1_CHANNELS_ENABLE
+} ___ADC_AWDG1_EN_Enum;
+
+typedef enum {
+  ADC_JAUTO_DISABLE,
+  ADC_JAUTO_ENABLE
+} ___ADC_JAUTO_Enum;
+
+typedef enum {
+  ADC_INJECTED_QUEUE_ENABLE,
+  ADC_INJECTED_QUEUE_DISABLE
+} ___ADC_JQDIS_Enum;
+
+typedef enum {
+  ADC_OVERSAMPLE_DISABLE,
+  ADC_OVERSAMPLE_ENABLE
+} ___ADC_OVERSAMPLE_EN_Enum;
+
+typedef struct {
   /* @Start=0x00, @End=0x03 */
   union {
     uint32_t ISR;
@@ -162,9 +235,36 @@ typedef struct {
       ___ADC_CAL_Enum ADCCAL : 1;
     } _CR;
   };
-  
   /* @Start=0x0C, @End=0x13 */
-  uint32_t CFGR[2];
+  union {
+    uint32_t CFGR[2];
+    struct _CFGR {
+      ___ADC_DMNGT_Enum DMNGT : 2;
+      ___ADC_RES_Enum RES : 3;
+      unsigned int EXTSEL : 5;
+      ___ADC_TRIG_Enum EXTEN : 2;
+      ___ADC_OVRMOD_Enum OVRMOD : 1;
+      ___ADC_CONT_Enum CONT : 1;
+      ___ADC_AUTDLY_Enum AUTDLY : 1;
+      unsigned int : 1;
+      ___ADC_DISCEN_Enum DISCEN : 1;
+      unsigned int DISCNUM : 3;
+      ___ADC_DISCEN_Enum JDISCEN : 1;
+      ___ADC_JSQRQM_Enum JSQRQM : 1;
+      ___ADC_AWDG1_SGL_Enum AWDG1SGL : 1;
+      ___ADC_AWDG1_EN_Enum AWDG1EN : 1;
+      ___ADC_AWDG1_EN_Enum JAWDG1EN : 1;
+      ___ADC_JAUTO_Enum JAUTO : 1;
+      unsigned int AWD1CH : 5;
+      ___ADC_JQDIS_Enum JQDIS : 1;
+      unsigned int : 0;
+      ___ADC_OVERSAMPLE_EN_Enum ROVSE : 1;
+      ___ADC_OVERSAMPLE_EN_Enum JOVSE : 1;
+      unsigned int : 3;
+      unsigned int OVSS : 4;
+
+    } _CFGR;
+  };
   /* @Start=0x14, @End=0x1B */
   uint32_t SMPR[2];
   /* @Start=0x1C, @End=0x1F */
