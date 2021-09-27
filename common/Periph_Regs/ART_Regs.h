@@ -9,5 +9,12 @@
 #endif
 
 typedef struct {
-    uint32_t CTR;
+    union {
+        uint32_t CTR;
+        struct _CTR {
+            bool EN : 1;
+            int : 7;
+            unsigned int PCACHEADDR : 12; //ONLY WORD ACCESS FOR RW
+            int : 12; 
+        } _CTR;
 } ART_TypeDef;
