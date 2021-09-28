@@ -8,6 +8,8 @@
 #include "..\Include\core_cm4.h"
 #endif
 
+/* ONLY WORD (32-BIT) OR HALF WORD (16-BIT) ACCESS FOR TIM1/TIM2/TIM3/TIM4/TIM5/TIM6/TIM7/TIM8/TIM16/TIM17 */
+
 typedef struct {
   uint32_t CR[2];       //0x00
   uint32_t SMCR;      //0x08

@@ -8,6 +8,8 @@
 #include "..\Include\core_cm4.h"
 #endif
 
+/* ONLY ALIGNED 8, 16, OR 32-BIT ACCESS */
+
 typedef struct {
     uint32_t CR;
 } __DMAMUX_Channel_TypeDef;

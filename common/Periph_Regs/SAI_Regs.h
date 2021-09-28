@@ -8,6 +8,8 @@
 #include "..\Include\core_cm4.h"
 #endif
 
+/* ONLY WORD (32-BIT) ACCESS */
+
 typedef struct {
 
 } SAI_TypeDef;

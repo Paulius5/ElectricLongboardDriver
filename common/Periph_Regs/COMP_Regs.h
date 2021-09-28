@@ -11,6 +11,6 @@
 typedef struct {
     uint32_t SR;
     uint32_t ICFR;
-    uint32_t DR;
+    uint32_t OR;
     uint32_t CFGR[2];
 } COMP_TypeDef;

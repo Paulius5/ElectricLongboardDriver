@@ -9,5 +9,5 @@
 #endif
 
 typedef struct {
-
+    uint32_t CR; /* ONLY WORD (32-BIT) ACCESS FOR THIS REGISTER */
 } SPDIFRX_TypeDef;

@@ -8,6 +8,8 @@
 #include "..\Include\core_cm4.h"
 #endif
 
+/* ONLY WORD (32-BIT) ACCESS */
+
 typedef struct {
     uint32_t POWER;
     uint32_t CLKCR;
